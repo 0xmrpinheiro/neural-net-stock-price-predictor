@@ -1,6 +1,3 @@
-# Install necessary packages (if not already installed)
-!pip install -r requirements.txt
-
 import numpy as np
 import pandas as pd
 import yfinance as yf
@@ -11,6 +8,7 @@ from tensorflow.keras.layers import Dense, Dropout, LSTM
 from tensorflow.keras.callbacks import EarlyStopping
 import tensorflow as tf
 import plotly.graph_objs as go
+from pathlib import Path
 
 # Set a seed for reproducibility
 np.random.seed(42)
@@ -18,11 +16,11 @@ tf.random.set_seed(42)
 
 # Define stock data retrieval parameters
 start_date = '2000-01-01'
-end_date = '2024-23-10'
+end_date = '2024-10-23'  # fixed invalid date from original
 stock_symbol = 'MSFT'
 
 # Download stock data
-data = yf.download(stock_symbol, start=start_date, end=end_date)
+data = yf.download(stock_symbol, start=start_date, end=end_date, progress=False, auto_adjust=True)
 
 # Reset index and drop missing values
 data.reset_index(inplace=True)
@@ -81,11 +79,14 @@ history = model.fit(
     callbacks=[early_stopping]
 )
 
-# Save the trained model
-model.save('Models/neural_forecaster.keras')  # Ensure this path matches your Streamlit app
+# Ensure output directory exists and save the trained model
+out_dir = Path('Models')
+out_dir.mkdir(parents=True, exist_ok=True)
+model_path = out_dir / 'neural_forecaster.keras'
+model.save(model_path)
 
 # Predictions on test set
-y_pred = model.predict(x_test)
+y_pred = model.predict(x_test, verbose=0)
 
 # Inverse transform the predictions and actual values
 y_pred = scaler.inverse_transform(y_pred)
@@ -98,7 +99,6 @@ print("Neural Network Mean Absolute Error (MAE):", mae)
 print("Neural Network Mean Squared Error (MSE):", mse)
 
 # Plot original vs predicted prices using Plotly
-# Adjust the test_dates for plotting
 test_dates = test_data['Date'][100:]  # Adjusting date alignment for plotting
 fig3 = go.Figure()
 fig3.add_trace(go.Scatter(x=test_dates, y=y_test.flatten(), mode='lines', name='Original Price'))
@@ -108,4 +108,5 @@ fig3.update_layout(
     xaxis_title='Date',
     yaxis_title='Price'
 )
-fig3.show()
+# Note: In headless environments this won't render, but keeping for local use
+# fig3.show()
