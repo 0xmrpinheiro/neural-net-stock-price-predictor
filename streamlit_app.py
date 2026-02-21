@@ -108,7 +108,7 @@ def display_charts(stock_data):
     fig1.add_trace(go.Scatter(x=stock_data.index, y=stock_data['Close'], mode='lines', name='Close Price'))
     if 'MA100' in stock_data.columns:
         fig1.add_trace(go.Scatter(x=stock_data.index, y=stock_data['MA100'], mode='lines', name='MA100'))
-    st.plotly_chart(fig1, use_container_width=True)
+    st.plotly_chart(fig1, width='stretch')
 
     fig2 = go.Figure()
     fig2.add_trace(go.Scatter(x=stock_data.index, y=stock_data['Close'], mode='lines', name='Close Price'))
@@ -116,7 +116,7 @@ def display_charts(stock_data):
         fig2.add_trace(go.Scatter(x=stock_data.index, y=stock_data['MA100'], mode='lines', name='MA100'))
     if 'MA200' in stock_data.columns:
         fig2.add_trace(go.Scatter(x=stock_data.index, y=stock_data['MA200'], mode='lines', name='MA200'))
-    st.plotly_chart(fig2, use_container_width=True)
+    st.plotly_chart(fig2, width='stretch')
 
     # Candlestick only if all OHLC present
     ohlc_cols = {'Open', 'High', 'Low', 'Close'}
@@ -125,12 +125,12 @@ def display_charts(stock_data):
                                                          open=stock_data['Open'], high=stock_data['High'],
                                                          low=stock_data['Low'], close=stock_data['Close'])])
         candlestick_fig.update_layout(title='Candlestick Chart')
-        st.plotly_chart(candlestick_fig, use_container_width=True)
+        st.plotly_chart(candlestick_fig, width='stretch')
 
     if 'Volume' in stock_data.columns:
         volume_fig = go.Figure(data=[go.Bar(x=stock_data.index, y=stock_data['Volume'])])
         volume_fig.update_layout(title='Volume Plot')
-        st.plotly_chart(volume_fig, use_container_width=True)
+        st.plotly_chart(volume_fig, width='stretch')
 
 def prepare_and_predict(stock_data, model):
     scaler = MinMaxScaler(feature_range=(0, 1))
@@ -152,7 +152,7 @@ def display_prediction_chart(stock_data, y_pred):
     fig3.add_trace(go.Scatter(x=stock_data.index[100:], y=stock_data['Close'][100:], mode='lines', name='Actual Price'))
     fig3.add_trace(go.Scatter(x=stock_data.index[100:], y=y_pred.flatten(), mode='lines', name='Predicted Price'))
     fig3.update_layout(title='Original vs Predicted Prices')
-    st.plotly_chart(fig3, use_container_width=True)
+    st.plotly_chart(fig3, width='stretch')
 
 def display_evaluation_metrics(stock_data, y_pred):
     if y_pred.size == 0:
@@ -191,7 +191,7 @@ def perform_and_display_forecasting(stock_data, model, scaler):
     fig4 = go.Figure()
     fig4.add_trace(go.Scatter(x=forecast_df.index, y=forecast_df['Forecast'], mode='lines', name='Forecasted Price'))
     fig4.update_layout(title='Stock Price Forecast for the Next 30 Days')
-    st.plotly_chart(fig4, use_container_width=True)
+    st.plotly_chart(fig4, width='stretch')
 
 def main():
     st.sidebar.title('Aeon Stock Price Predict')
