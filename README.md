@@ -1,4 +1,4 @@
-# Aeon Quant — Stock Price Prediction App
+# Aeon Quant â€” Stock Price Prediction App
 
 > **Disclaimer**: Stock price prediction is inherently uncertain. This app is for educational purposes only and **not** investment advice.
 
@@ -8,7 +8,7 @@ A Streamlit application that predicts stock prices using an LSTM model and visua
 
 ## Quick Links
 
-- **Live Demo**: <https://aeonquant.streamlit.app/>
+- **Live Demo**: <https://neuralstocks.streamlit.app/>
 - **Last Model Training**: October 23, 2024
 
 ## Overview
@@ -79,8 +79,8 @@ No manual environment variables required. The app suppresses TF logs internally 
 
 ## Troubleshooting
 
-- **Empty/odd charts or “MSFT” headers under columns**: This happens when Yahoo returns MultiIndex columns. The app now flattens/cleans columns automatically.
-- **“No timezone found, symbol may be delisted”**: Caused by Yahoo metadata. Using a recent `yfinance` version and our robust downloader resolves it.
+- **Empty/odd charts or â€œMSFTâ€ headers under columns**: This happens when Yahoo returns MultiIndex columns. The app now flattens/cleans columns automatically.
+- **â€œNo timezone found, symbol may be delistedâ€**: Caused by Yahoo metadata. Using a recent `yfinance` version and our robust downloader resolves it.
 
 ## Dependencies
 
@@ -98,7 +98,7 @@ yfinance>=0.2.40
 
 ## License
 
-GPL-3.0 — see [LICENSE](LICENSE).
+GPL-3.0 â€” see [LICENSE](LICENSE).
 
 ## Contributing
 
