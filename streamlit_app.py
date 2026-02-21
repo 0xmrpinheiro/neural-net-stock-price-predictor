@@ -8,7 +8,8 @@ import yfinance as yf
 from datetime import datetime, timedelta
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_absolute_error, mean_squared_error
-from tensorflow.keras.models import load_model
+import tf_keras
+from tf_keras.models import load_model
 from pathlib import Path
 import plotly.graph_objs as go
 
